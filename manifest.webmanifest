@@ -1,0 +1,1 @@
+{"name":"SUMARIUM Mobile","short_name":"SUMARIUM","description":"Biblioteca móvil de expedientes","start_url":"./","scope":"./","display":"standalone","background_color":"#0b1320","theme_color":"#0d1724","orientation":"portrait","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
