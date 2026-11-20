@@ -1,4 +1,4 @@
-# QA — SUMARIUM Mobile v0.2.0
+# QA — SUMARIUM Mobile v0.2.1
 
 ## Comprobaciones realizadas
 

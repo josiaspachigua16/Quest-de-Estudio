@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_VERSION = '0.2.0';
+const APP_VERSION = '0.2.1';
 const DB_NAME = 'sumarium-mobile-db';
 const DB_VERSION = 1;
 const CASE_STORE = 'cases';
@@ -392,7 +392,7 @@ async function init() {
     toast('No se pudo iniciar el almacenamiento local. Revisá el navegador.');
   }
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
-    navigator.serviceWorker.register('./sw.js?v=0.2.0').catch(error => console.warn('Service worker no disponible:',error));
+    navigator.serviceWorker.register('./sw.js?v=0.2.1', {updateViaCache:'none'}).then(registration => registration.update()).catch(error => console.warn('Service worker no disponible:',error));
   }
   $('#connectionState').innerHTML = navigator.onLine ? '<i></i> En línea' : '<i></i> Sin conexión';
 }

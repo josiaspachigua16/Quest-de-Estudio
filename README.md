@@ -1,50 +1,26 @@
-# SUMARIUM Mobile v0.2.0
+# SUMARIUM Mobile v0.2.1 — publicación en Cloudflare Pages
 
-Progressive Web App (PWA) estática para Android y otros navegadores móviles. Diseñada como complemento de SUMARIUM de escritorio, no como reemplazo de la extensión.
+Este paquete está preparado para Direct Upload. Los archivos del sitio están directamente en la raíz del ZIP: `index.html`, `styles.css`, `app.js`, `manifest.webmanifest`, `sw.js`, iconos y `_headers`.
 
-## Qué está implementado
+## Antes de publicar
 
-- Diseño responsive con navegación inferior propia, respetando las áreas seguras de Android.
-- Inicio con métricas y expedientes recientes.
-- Biblioteca local con búsqueda y filtros.
-- Alta y edición de expedientes: carátula, número, año, juzgado/circunscripción, fuero, estado, URL, próxima fecha y notas.
-- Ficha de detalle, seguimiento manual y eliminación individual.
-- Seguimiento como vista separada, sin confundirlo con la biblioteca general.
-- Persistencia en IndexedDB.
-- Migración automática de registros que la v0.1.0 guardó en `localStorage` en el mismo origen.
-- Exportación e importación JSON con combinación y deduplicación de expedientes.
-- Service worker con caché de la aplicación para abrir la interfaz sin conexión.
-- Comprobación de campos y URLs; enlaces externos solo HTTP/HTTPS.
+La captura muestra `quest-de-estudio.pages.dev`. No reemplaces los archivos de ese proyecto ni publiques SUMARIUM dentro de él: el destino debe ser un proyecto Pages independiente.
 
-## Qué todavía NO está conectado
+## Crear el proyecto independiente
 
-- No sincroniza automáticamente con la extensión SUMARIUM de escritorio: no se ha configurado un backend compartido ni una API autenticada.
-- No inicia sesión en Gestión de Partes ni escanea expedientes del Poder Judicial.
-- No descarga expedientes, anexos ni certificados.
-- No incluye OCR, IA contextual, análisis de actuaciones ni notificaciones push.
-- El seguimiento es una lista manual; no consulta novedades por sí solo.
+1. Abrí Cloudflare y entrá en Workers & Pages.
+2. Elegí Create application → Pages → Direct Upload (los rótulos pueden variar ligeramente).
+3. Creá un proyecto nuevo llamado `sumarium-mobile` (si está ocupado, elegí `sumarium-mobile-app`).
+4. Arrastrá este ZIP y elegí Deploy site.
+5. Abrí el dominio nuevo asignado, por ejemplo `sumarium-mobile.pages.dev`.
+6. Confirmá que la cabecera muestre el indicador `v0.2.1`. Si no aparece, no estás viendo esta compilación.
 
-No ingresar contraseñas judiciales ni considerar esta versión como repositorio único de documentación. Exportar respaldos periódicos.
+Cloudflare admite ZIP o carpeta para Direct Upload desde el panel: https://developers.cloudflare.com/pages/get-started/direct-upload/
 
-## Despliegue en Cloudflare Pages
+## Datos existentes en la v0.1.0
 
-1. Extraer el ZIP. La carpeta `SUMARIUM_MOBILE_v0_2_0` contiene directamente `index.html`, `styles.css`, `app.js`, `manifest.webmanifest`, `sw.js` e `icon.svg`.
-2. Crear un proyecto Pages separado para SUMARIUM Mobile (no sobrescribir el proyecto de Quest de Estudio).
-3. Cargar el contenido de la carpeta como raíz del sitio. No publicar la carpeta contenedora como subcarpeta adicional salvo que se configure el mismo `base path`.
-4. Abrir el dominio HTTPS y comprobar que `/`, `/styles.css?v=0.2.0`, `/app.js?v=0.2.0`, `/manifest.webmanifest` y `/sw.js?v=0.2.0` devuelven sus archivos correctos.
-5. En Android, abrir el sitio con un navegador compatible y usar “Instalar aplicación” o “Añadir a pantalla de inicio”.
+El almacenamiento del navegador está aislado por dominio. Si hay registros en el dominio anterior, exportá primero un respaldo JSON desde Perfil → Respaldos e importalo en el dominio nuevo. El sitio nuevo no puede leer automáticamente el almacenamiento local del dominio anterior.
 
-## Actualización desde v0.1.0
+## Alcance
 
-Desplegar v0.2.0 en el MISMO origen/dominio y ruta para permitir la migración de `localStorage` a IndexedDB. No borrar datos del sitio ni limpiar el almacenamiento del navegador antes de que la migración se complete. La aplicación marca la migración una vez; exportar un respaldo antes de reemplazar una instalación de prueba.
-
-## Pruebas manuales recomendadas
-
-- Alta, edición y eliminación de una causa.
-- Búsqueda por carátula, número, juzgado y notas.
-- Activar/desactivar seguimiento.
-- Abrir y cerrar ficha de detalle.
-- Exportar JSON e importarlo de nuevo; no deben aparecer duplicados.
-- Recargar la app, cerrar el navegador y reabrirla; los registros deben seguir.
-- Probar modo avión después de haber abierto la app al menos una vez.
-- Instalar en la pantalla de inicio y verificar que la navegación inferior no tape el contenido.
+Incluye Inicio, Biblioteca, Seguimiento, Perfil, alta/edición, detalle, búsqueda, filtros, IndexedDB, respaldo/importación JSON y caché PWA. Todavía no tiene backend compartido, sincronización con SUMARIUM Desktop, escaneo del portal judicial, descargas, OCR/IA ni notificaciones push.
