@@ -1,25 +1,124 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d1724"><meta name="description" content="SUMARIUM Mobile — biblioteca y seguimiento de expedientes">
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><link rel="stylesheet" href="styles.css">	itle>SUMARIUM Mobile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1421">
+  <meta name="description" content="SUMARIUM Mobile: biblioteca local y seguimiento de expedientes jurídicos.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>SUMARIUM Mobile</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css?v=0.2.0">
 </head>
 <body>
-<div class="app-shell">
-<header class="topbar"><div class="brand"><span class="brand-mark">S</span><div><strong>SUMARIUM</strong><small>MOBILE · COMPANION</small></div></div><button class="icon-btn" id="settingsBtn" aria-label="Información">ⓘ</button></header>
-<main id="main">
-<section class="hero"><div class="eyebrow">CENTRO JURÍDICO</div><h1>Tu actividad,<br><span>en un solo lugar.</span></h1><p>Consultá tu biblioteca y mantené tus expedientes a mano.</p><div class="hero-glow"></div></section>
-<section class="stats"><div class="stat"><small>EXPEDIENTES</small><strong id="caseCount">0</strong></div><div class="stat"><small>EN SEGUIMIENTO</small><strong id="watchCount">0</strong></div><div class="stat"><small>ACTUALIZADOS</small><strong id="updatedCount">0</strong></div></section>
-<section class="section-head"><div><small class="section-kicker">BIBLIOTECA</small><h2>Expedientes</h2></div><button class="add-btn" id="addBtn">＋ Añadir</button></section>
-<div class="search-wrap"><span>⌕</span><input id="search" placeholder="Buscar por carátula o número…" autocomplete="off"></div>
-<div class="filters" id="filters"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="watch">En seguimiento</button><button class="filter" data-filter="recent">Recientes</button></div>
-<div id="caseList" class="case-list"></div>
-<div class="empty" id="empty"><div class="empty-icon">▤</div><strong>Tu biblioteca está lista</strong><p>Añadí expedientes manualmente. La sincronización con SUMARIUM de escritorio requiere conectar un servicio compartido.</p><button class="primary" id="emptyAdd">Añadir expediente</button></div>
-</main>
-<nav class="bottom-nav"><button class="nav-item active" data-view="home"><span>⌂</span><small>Inicio</small></button><button class="nav-item" data-view="library"><span>▤</span><small>Biblioteca</small></button><button class="nav-item" data-view="alerts"><span>◉</span><small>Seguimiento</small></button><button class="nav-item" data-view="profile"><span>○</span><small>Perfil</small></button></nav>
-</div>
-<div class="modal-backdrop" id="modal"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Añadir expediente</h3><button id="closeModal" class="icon-btn">✕</button></div><form id="caseForm"><label>Carátula<input name="title" required placeholder="Nombre del expediente"></label><label>Número<input name="number" placeholder="Número de expediente"></label><label>Año<input name="year" inputmode="numeric" placeholder="2026"></label><label>Juzgado / Circunscripción<input name="court" placeholder="Juzgado y circunscripción"></label><label>URL del expediente<input name="url" type="url" placeholder="https://…"></label><div class="check-row"><input name="watch" type="checkbox" id="watchCheck"><label for="watchCheck">Agregar a seguimiento</label></div><button class="primary full" type="submit">Guardar expediente</button></form></div></div>
-<div class="toast" id="toast"></div>
-<script src="app.js"></script>
-</body></html>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="SUMARIUM Mobile, inicio" data-go="home">
+        <span class="brand-mark">S</span>
+        <span class="brand-copy"><strong>SUMARIUM</strong><small>MOBILE · COMPANION</small></span>
+      </a>
+      <div class="top-actions">
+        <span id="connectionState" class="connection-pill"><i></i> Local</span>
+        <button class="icon-btn" id="aboutBtn" aria-label="Información de la aplicación" title="Información">i</button>
+      </div>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+      <section class="view active" id="view-home" data-view="home">
+        <section class="hero">
+          <div class="eyebrow">CENTRO JURÍDICO</div>
+          <h1>Tu actividad,<br><span>en un solo lugar.</span></h1>
+          <p>Consultá tu biblioteca y mantené tus expedientes organizados desde el teléfono.</p>
+          <div class="hero-orb" aria-hidden="true"></div>
+          <div class="hero-footer"><span class="live-dot"></span> Biblioteca de este dispositivo</div>
+        </section>
+
+        <section class="stats" aria-label="Resumen de expedientes">
+          <article class="stat"><small>EXPEDIENTES</small><strong id="statCases">0</strong></article>
+          <article class="stat"><small>EN SEGUIMIENTO</small><strong id="statWatched">0</strong></article>
+          <article class="stat"><small>ACTUALIZADOS</small><strong id="statRecent">0</strong></article>
+        </section>
+
+        <section class="quick-grid" aria-label="Accesos rápidos">
+          <button class="quick-action" id="quickAdd"><span class="quick-icon">＋</span><span><strong>Nuevo expediente</strong><small>Agregar a la biblioteca</small></span></button>
+          <button class="quick-action" id="quickBackup"><span class="quick-icon">⇧</span><span><strong>Crear respaldo</strong><small>Guardar una copia</small></span></button>
+        </section>
+
+        <section class="section-block">
+          <div class="section-head"><div><span class="section-kicker">ACTIVIDAD</span><h2>Expedientes recientes</h2></div><button class="text-btn" data-go="library">Ver todos <span aria-hidden="true">→</span></button></div>
+          <div id="homeRecent" class="case-list"></div>
+          <div id="homeEmpty" class="empty-state compact" hidden><div class="empty-symbol">▤</div><strong>Tu biblioteca está vacía</strong><p>Agregá un expediente para empezar a organizar tus causas.</p><button class="primary-btn" id="homeAdd">Añadir expediente</button></div>
+        </section>
+        <div class="notice"><span class="notice-icon">ⓘ</span><p>Los datos de esta versión se guardan en este dispositivo. La sincronización con SUMARIUM de escritorio todavía no está conectada.</p></div>
+      </section>
+
+      <section class="view" id="view-library" data-view="library" hidden>
+        <div class="page-heading"><div><span class="section-kicker">BIBLIOTECA</span><h1>Expedientes</h1><p id="librarySubtitle">Tus causas guardadas en este dispositivo.</p></div><button class="add-btn" id="addBtn">＋ Añadir</button></div>
+        <label class="search-box"><span class="search-icon" aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Buscar por carátula, número o juzgado…" autocomplete="off"></label>
+        <div class="filter-row" id="libraryFilters" role="group" aria-label="Filtrar expedientes">
+          <button class="filter-chip active" data-filter="all">Todos <b id="allCount">0</b></button>
+          <button class="filter-chip" data-filter="watch">En seguimiento <b id="watchFilterCount">0</b></button>
+          <button class="filter-chip" data-filter="recent">Recientes</button>
+        </div>
+        <div id="libraryList" class="case-list"></div>
+        <div id="libraryEmpty" class="empty-state" hidden><div class="empty-symbol">▤</div><strong>Tu biblioteca está lista</strong><p>Añadí expedientes manualmente o importá un respaldo JSON de SUMARIUM Mobile.</p><button class="primary-btn" id="emptyAdd">Añadir expediente</button></div>
+        <div id="noResults" class="empty-state small-empty" hidden><strong>No encontramos expedientes</strong><p>Probá con otra búsqueda o cambiá el filtro.</p><button class="text-btn" id="clearSearch">Limpiar búsqueda</button></div>
+      </section>
+
+      <section class="view" id="view-following" data-view="following" hidden>
+        <div class="page-heading"><div><span class="section-kicker">RADAR PERSONAL</span><h1>Seguimiento</h1><p>Causas que marcaste para tener a mano.</p></div></div>
+        <div class="follow-summary"><div><span class="follow-pulse"></span><strong id="followingTotal">0</strong><small>causas seleccionadas</small></div><p>El seguimiento de esta versión es manual. No consulta automáticamente Gestión de Partes ni detecta nuevas actuaciones.</p></div>
+        <div id="followingList" class="case-list"></div>
+        <div id="followingEmpty" class="empty-state" hidden><div class="empty-symbol">◎</div><strong>Todavía no seguís expedientes</strong><p>Desde la Biblioteca, marcá las causas que quieras mantener en esta sección.</p><button class="secondary-btn" data-go="library">Ir a la biblioteca</button></div>
+      </section>
+
+      <section class="view" id="view-profile" data-view="profile" hidden>
+        <div class="page-heading"><div><span class="section-kicker">CONFIGURACIÓN</span><h1>Perfil y datos</h1><p>Administrá la información almacenada en este dispositivo.</p></div></div>
+        <article class="profile-card"><div class="profile-avatar">S</div><div><strong>SUMARIUM Mobile</strong><small>Versión 0.2.0 · Companion</small><span id="storageLabel">Base local disponible</span></div></article>
+        <section class="settings-section"><span class="section-kicker">INSTALACIÓN</span><h2>Usar como aplicación</h2><p>Instalá SUMARIUM Mobile en la pantalla de inicio para abrirlo en una ventana propia. En algunos navegadores, la opción está en el menú del navegador.</p><button class="secondary-btn full-width" id="installBtn">Instalar SUMARIUM Mobile</button></section>
+        <section class="settings-section"><span class="section-kicker">RESPALDOS</span><h2>Proteger mi biblioteca</h2><p>Exportá tus expedientes a un archivo JSON o restaurá un respaldo anterior. La importación combina los registros y evita duplicados.</p><div class="settings-actions"><button class="primary-btn" id="exportBtn">⇩ Exportar respaldo</button><button class="secondary-btn" id="importBtn">⇧ Importar respaldo</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section>
+        <section class="settings-section"><span class="section-kicker">ESTADO DEL SISTEMA</span><div class="system-row"><span>Almacenamiento local</span><b class="status-ok">Disponible</b></div><div class="system-row"><span>Conexión con escritorio</span><b class="status-pending">No conectada</b></div><div class="system-row"><span>Conexión con Gestión de Partes</span><b class="status-pending">No conectada</b></div><div class="system-row"><span>OCR e inteligencia artificial</span><b class="status-pending">No disponibles</b></div><div class="system-row"><span>Notificaciones automáticas</span><b class="status-pending">No disponibles</b></div></section>
+        <section class="settings-section danger-zone"><span class="section-kicker">ZONA DE RIESGO</span><h2>Eliminar biblioteca local</h2><p>Elimina los expedientes guardados en este dispositivo. Esta acción no puede deshacerse. Exportá un respaldo antes.</p><button class="danger-btn" id="clearAllBtn">Eliminar todos los expedientes</button></section>
+        <p class="footer-note">SUMARIUM Mobile es un complemento independiente. No reemplaza la extensión de escritorio ni constituye un canal oficial del Poder Judicial.</p>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item active" data-go="home" aria-current="page"><span class="nav-icon">⌂</span><small>Inicio</small></button>
+      <button class="nav-item" data-go="library"><span class="nav-icon">▤</span><small>Biblioteca</small></button>
+      <button class="nav-item" data-go="following"><span class="nav-icon">◎</span><small>Seguimiento</small></button>
+      <button class="nav-item" data-go="profile"><span class="nav-icon">○</span><small>Perfil</small></button>
+    </nav>
+  </div>
+
+  <dialog class="app-dialog" id="caseDialog" aria-labelledby="caseDialogTitle">
+    <form id="caseForm" class="dialog-form">
+      <div class="dialog-head"><div><span class="section-kicker">BIBLIOTECA</span><h2 id="caseDialogTitle">Añadir expediente</h2></div><button type="button" class="icon-btn close-dialog" data-close="caseDialog" aria-label="Cerrar">×</button></div>
+      <input type="hidden" name="id">
+      <label>Carátula <em>*</em><input name="title" required maxlength="300" placeholder="Carátula completa del expediente"></label>
+      <div class="form-grid"><label>Número<input name="number" maxlength="40" placeholder="Ej. 702"></label><label>Año<input name="year" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="2026"></label></div>
+      <label>Juzgado / circunscripción<input name="court" maxlength="180" placeholder="Juzgado y circunscripción"></label>
+      <div class="form-grid"><label>Fuero<select name="jurisdiction"><option value="">No especificado</option><option>Civil</option><option>Penal</option><option>Laboral</option><option>Niñez y Adolescencia</option><option>Contencioso Administrativo</option><option>Otro</option></select></label><label>Estado<select name="status"><option>Activo</option><option>En trámite</option><option>Archivado</option><option>Finalizado</option><option>Sin verificar</option></select></label></div>
+      <label>Enlace del expediente<input name="url" type="url" inputmode="url" placeholder="https://apps.csj.gov.py/…"></label>
+      <label>Próxima fecha importante<input name="nextDate" type="date"></label>
+      <label>Notas<textarea name="notes" rows="3" maxlength="3000" placeholder="Anotaciones internas (opcional)"></textarea></label>
+      <label class="toggle-row"><input type="checkbox" name="watch"><span><strong>Agregar a seguimiento</strong><small>La causa aparecerá también en la sección Seguimiento.</small></span></label>
+      <div class="dialog-actions"><button type="button" class="secondary-btn" data-close="caseDialog">Cancelar</button><button class="primary-btn" type="submit">Guardar expediente</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="app-dialog detail-dialog" id="detailDialog" aria-labelledby="detailTitle">
+    <div class="dialog-form"><div class="dialog-head"><div><span class="section-kicker">DETALLE DEL EXPEDIENTE</span><h2 id="detailTitle">Expediente</h2></div><button class="icon-btn close-dialog" data-close="detailDialog" aria-label="Cerrar">×</button></div><div id="detailBody"></div><div class="detail-actions"><button class="primary-btn" id="detailOpen" hidden>↗ Abrir expediente</button><button class="secondary-btn" id="detailEdit">Editar</button><button class="secondary-btn" id="detailWatch">Seguir</button><button class="danger-btn subtle-danger" id="detailDelete">Eliminar</button></div></div>
+  </dialog>
+
+  <dialog class="app-dialog info-dialog" id="aboutDialog"><div class="dialog-form"><div class="dialog-head"><div><span class="section-kicker">ACERCA DE</span><h2>SUMARIUM Mobile</h2></div><button class="icon-btn close-dialog" data-close="aboutDialog" aria-label="Cerrar">×</button></div><p class="dialog-copy">Versión 0.2.0. Companion móvil con biblioteca local, búsqueda, seguimiento manual y respaldo de datos.</p><div class="notice"><span class="notice-icon">ⓘ</span><p>Esta versión todavía no comparte automáticamente los datos con SUMARIUM de escritorio. No uses esta aplicación como único respaldo de expedientes.</p></div><button class="primary-btn full-width" data-close="aboutDialog">Entendido</button></div></dialog>
+
+  <input id="backupDownload" type="file" hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=0.2.0" defer></script>
+</body>
+</html>
