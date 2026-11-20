@@ -50,7 +50,20 @@ a{color:var(--ac)}.err{color:var(--bad);font-weight:700;margin-top:10px}kbd{font
 #mascot:not(.talk) .mc{display:block}#mascot.talk[data-mood="happy"] .mh,#mascot.talk[data-mood="happy"] .tg,#mascot.talk[data-mood="sad"] .ms,#mascot.talk[data-mood="wow"] .mw{display:block}#mascot[data-mood="sad"] .bs,#mascot[data-mood="sad"] .ts{display:block}
 #mascot.talk .mh,#mascot.talk .tg,#mascot.talk .ms,#mascot.talk .mw{transform-box:fill-box;transform-origin:50% 0;animation:mt .3s ease-in-out infinite alternate}@keyframes mt{from{transform:scaleY(.55)}to{transform:scaleY(1)}}
 #mascot[data-mood="sad"] .tail{animation-duration:2s}#mascot.jump #dog{animation:jp .7s}@keyframes jp{30%{transform:translateY(-34px) rotate(-6deg)}60%{transform:translateY(0)}80%{transform:translateY(-10px)}}
-#dog .cap,#dog .gl{display:none}#mascot[data-lv="2"] .cap,#mascot[data-lv="3"] .cap,#mascot[data-lv="4"] .cap,#mascot[data-lv="5"] .cap,#mascot[data-lv="6"] .cap{display:block}#mascot[data-lv="4"] .gl,#mascot[data-lv="5"] .gl,#mascot[data-lv="6"] .gl{display:block}
+#dog .cap,#dog .gl,#dog .outfit{display:none}
+#mascot[data-lv="2"] #dog .l2,#mascot[data-lv="3"] #dog .l3,#mascot[data-lv="4"] #dog .l4,#mascot[data-lv="5"] #dog .l5,#mascot[data-lv="6"] #dog .l6,#mascot[data-lv="7"] #dog .l7{display:block}
+#mascot[data-lv="4"] #dog .gl,#mascot[data-lv="5"] #dog .gl,#mascot[data-lv="6"] #dog .gl,#mascot[data-lv="7"] #dog .gl,#mascot[data-lv="7"] #dog .cap{display:block}
+#mascot.lick .tg{display:block;transform-box:fill-box;transform-origin:50% 0;animation:lick .55s ease-out}
+@keyframes lick{0%{transform:scaleY(.35) translateY(-3px)}45%{transform:scaleY(1.5) translateY(3px)}100%{transform:scaleY(1) translateY(0)}}
+#speechEmoji{font-size:1.05em;margin-right:5px;white-space:nowrap;vertical-align:-.04em}
+.list-answer{display:grid;gap:9px;margin-top:12px}
+.list-answer label{display:flex;align-items:center;gap:9px;color:var(--mut);font-size:.88rem;font-weight:700}
+.list-answer label span{width:24px;height:24px;flex:0 0 24px;border-radius:8px;background:rgba(91,75,255,.13);color:var(--ac);display:grid;place-items:center}
+.list-answer input{min-width:0;flex:1;width:100%;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:11px 12px;font:inherit;outline:none}
+.list-answer input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(91,75,255,.12)}
+.list-hint{font-size:.84rem;color:var(--mut);margin-top:8px}
+.list-review{display:grid;gap:5px;margin-top:9px;font-size:.9rem}
+.list-review .hit{color:var(--ok)}.list-review .miss{color:var(--bad)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 /* FASE 2: header, mascota, dashboard y tarjeta de tema (mobile-first) */
@@ -142,10 +155,16 @@ html{-webkit-text-size-adjust:100%;overflow-x:hidden}body{min-height:100vh;min-h
 
 <main id="app"></main>
 <canvas id="cf"></canvas>
-<div id="mascot" data-mood="happy" data-lv="1" role="img" aria-label="Chispa, tu mascota tutora"><div id="speech"></div>
+<div id="mascot" data-mood="happy" data-lv="1" role="img" aria-label="Chispa, tu mascota tutora"><div id="speech"><span id="speechEmoji" aria-hidden="true">🐾</span><span id="speechText"></span></div>
 <svg id="dog" viewBox="0 0 200 215" aria-hidden="true"><g class="tail"><path d="M150 168Q182 158 178 124Q176 108 164 111" stroke="#d9954a" stroke-width="13" fill="none" stroke-linecap="round"/></g>
 <g class="eg l"><ellipse cx="48" cy="98" rx="19" ry="36" fill="#c9862f" transform="rotate(-22 48 98)"/></g><g class="eg r"><ellipse cx="152" cy="98" rx="19" ry="36" fill="#c9862f" transform="rotate(22 152 98)"/></g>
 <ellipse cx="100" cy="172" rx="58" ry="38" fill="#f0b46a"/><ellipse cx="72" cy="200" rx="14" ry="9" fill="#ffe0b3"/><ellipse cx="128" cy="200" rx="14" ry="9" fill="#ffe0b3"/>
+<g class="outfit l2"><path d="M70 143Q100 157 130 143L123 162Q100 180 77 162Z" fill="#26b8b2" stroke="#167d83" stroke-width="2"/><path d="M83 151L100 171L117 151" fill="none" stroke="#e6ffff" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="160" r="3.5" fill="#ffd166"/></g>
+<g class="outfit l3"><path d="M53 151Q69 143 82 148L100 160L118 148Q131 143 147 151L153 194Q100 211 47 194Z" fill="#4c8de8" stroke="#2f5eb0" stroke-width="2"/><path d="M83 151Q100 162 117 151" fill="none" stroke="#cbe7ff" stroke-width="4"/><path d="M92 178L100 170L108 178" fill="none" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/></g>
+<g class="outfit l4"><path d="M53 151Q69 143 82 148L100 160L118 148Q131 143 147 151L153 194Q100 211 47 194Z" fill="#7657bd" stroke="#49358c" stroke-width="2"/><path d="M78 149L100 174L122 149" fill="none" stroke="#bba8ed" stroke-width="5"/><path d="M100 160L100 198" stroke="#e8dcff" stroke-width="3" stroke-dasharray="4 5"/><circle cx="100" cy="183" r="4" fill="#ffd166"/></g>
+<g class="outfit l5"><path d="M52 151Q69 143 82 148L100 160L118 148Q131 143 148 151L154 194Q100 211 46 194Z" fill="#283b68" stroke="#19294e" stroke-width="2"/><path d="M80 148L100 171L120 148L111 190L100 201L89 190Z" fill="#f2f1ff" stroke="#c4c4e7" stroke-width="1.5"/><path d="M100 169L92 181L100 198L108 181Z" fill="#d94d66"/><path d="M72 151L88 165L81 181M128 151L112 165L119 181" fill="none" stroke="#e1b85e" stroke-width="3"/><circle cx="136" cy="177" r="7" fill="#ffd166" stroke="#ad7b19" stroke-width="2"/><path d="M136 184v7" stroke="#ad7b19" stroke-width="2"/></g>
+<g class="outfit l6"><path d="M49 151Q68 141 83 148L100 160L117 148Q133 141 151 151L158 195Q100 213 42 195Z" fill="#225b65" stroke="#143d49" stroke-width="2"/><path d="M77 148L100 174L123 148L113 196L100 205L87 196Z" fill="#e4f6ef" stroke="#a3cfc3" stroke-width="1.5"/><path d="M100 173L92 185L100 202L108 185Z" fill="#e1a83a"/><path d="M59 177L79 192M141 177L121 192" stroke="#56c7b5" stroke-width="4" stroke-linecap="round"/><circle cx="137" cy="168" r="6" fill="#ffd166"/></g>
+<g class="outfit l7"><path d="M47 148Q66 140 83 148L100 161L117 148Q134 140 153 148L161 198Q100 216 39 198Z" fill="#24234f" stroke="#121338" stroke-width="2.5"/><path d="M75 147L100 177L125 147L115 199L100 209L85 199Z" fill="#f0e8ff" stroke="#c7b5ed" stroke-width="2"/><path d="M100 176L91 188L100 207L109 188Z" fill="#7b50c8"/><path d="M67 158L83 177L76 194M133 158L117 177L124 194" fill="none" stroke="#e8c66a" stroke-width="4" stroke-linecap="round"/><path d="M55 185Q66 177 76 188L71 200Q61 202 55 195Z" fill="#fff3d1" stroke="#c99a39" stroke-width="2"/><path d="M58 187L73 197" stroke="#c99a39" stroke-width="2"/><circle cx="137" cy="177" r="8" fill="#ffd166" stroke="#a97822" stroke-width="2"/><path d="M137 185l-5 8h10z" fill="#ffdf7b"/></g>
 <ellipse cx="100" cy="105" rx="58" ry="52" fill="#f5c274"/><ellipse cx="100" cy="76" rx="30" ry="16" fill="#ffe0b3" opacity=".5"/>
 <g class="eyes"><ellipse cx="80" cy="99" rx="9" ry="11" fill="#2a1a0a"/><ellipse cx="120" cy="99" rx="9" ry="11" fill="#2a1a0a"/><circle cx="83" cy="95" r="3.5" fill="#fff"/><circle cx="123" cy="95" r="3.5" fill="#fff"/></g>
 <ellipse cx="63" cy="120" rx="10" ry="6" fill="#ff9b9b" opacity=".55"/><ellipse cx="137" cy="120" rx="10" ry="6" fill="#ff9b9b" opacity=".55"/>
@@ -154,7 +173,7 @@ html{-webkit-text-size-adjust:100%;overflow-x:hidden}body{min-height:100vh;min-h
 <ellipse class="ms" cx="100" cy="142" rx="8" ry="6" fill="#7a2e2e"/><path class="bs" d="M66 80L92 88M134 80L108 88" stroke="#2a1a0a" stroke-width="4" stroke-linecap="round"/><ellipse class="ts" cx="70" cy="114" rx="3.5" ry="6" fill="#7ec8ff"/>
 <ellipse class="mw" cx="100" cy="140" rx="10" ry="13" fill="#7a2e2e"/>
 <g class="gl" fill="none" stroke="#2a1a0a" stroke-width="3"><circle cx="80" cy="99" r="14"/><circle cx="120" cy="99" r="14"/><path d="M94 99h12"/></g>
-<g class="cap"><path d="M50 62L100 38L150 62L100 82Z" fill="#2b2b6e"/><rect x="80" y="70" width="40" height="14" fill="#2b2b6e"/><path d="M150 62v24" stroke="#ffd166" stroke-width="3"/><circle cx="150" cy="90" r="4.5" fill="#ffd166"/></g></svg></div>
+<g class="cap"><path d="M43 62L100 35L157 62L100 87Z" fill="#26214f" stroke="#151331" stroke-width="2"/><path d="M78 70H122V82Q100 92 78 82Z" fill="#342d70"/><path d="M154 62V91" stroke="#ffd166" stroke-width="3.5" stroke-linecap="round"/><circle cx="154" cy="94" r="4.5" fill="#ffd166"/><path d="M154 98Q160 104 154 109" fill="none" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/></g></svg></div>
 <script>
 const app=document.getElementById('app'),$=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -209,10 +228,13 @@ const MSG={
  fail:['Todavía no, pero ya falta poco. Repasemos el tema.','Un repaso más y lo lográs. ¡Vamos!'],
  tip:['Consejo: explicá el tema en voz alta, con tus palabras.','Consejo: si dudás, volvé a la tarjeta anterior y leé otra vez.','Consejo: estudiar un rato cada día rinde más que una maratón.','Consejo: intentá responder antes de mirar la explicación.'],
  lock:['Primero aprobá el tema anterior. ¡Vamos!']};
-const M=$('mascot');let mt;
+const M=$('mascot');let mt,lickTimer,lickEnd;
+const MOOD_STICKERS={happy:['🐶✨','🐾💜'],sad:['🐶🥺','🐾💧'],wow:['🐶💫','🐾🌟'],curious:['🐶🔎','🐾💭'],proud:['🐶🏅','🐾🎓']};
 $('dog').addEventListener('animationend',e=>{if(e.animationName==='jp')M.classList.remove('jump')});
-function say(t,mood='happy',ms=4600){M.dataset.mood=mood;$('speech').textContent=t;M.classList.add('talk');if(mood==='wow'){M.classList.remove('jump');void M.offsetWidth;M.classList.add('jump')}clearTimeout(mt);if(ms)mt=setTimeout(()=>{M.classList.remove('talk');M.dataset.mood='happy';setTimeout(()=>{if(!M.classList.contains('talk'))$('speech').textContent=HINT},450)},ms)}
-const HINT='Tocá a Chispa para un consejo.';$('speech').textContent=HINT;
+function tongue(){M.classList.remove('lick');void M.offsetWidth;M.classList.add('lick');clearTimeout(lickEnd);lickEnd=setTimeout(()=>M.classList.remove('lick'),700)}
+function scheduleTongue(){clearTimeout(lickTimer);lickTimer=setTimeout(()=>{if(document.visibilityState!=='hidden'&&Math.random()<.8)tongue();scheduleTongue()},11000+Math.random()*12000)}
+function say(t,mood='happy',ms=4600){M.dataset.mood=mood;$('speechEmoji').textContent=pick(MOOD_STICKERS[mood]||MOOD_STICKERS.happy);$('speechText').textContent=(Math.random()<.38?'🐾 ':'')+t;M.classList.add('talk');if(mood==='wow'){M.classList.remove('jump');void M.offsetWidth;M.classList.add('jump')}if(mood==='happy'&&Math.random()<.2)tongue();clearTimeout(mt);if(ms)mt=setTimeout(()=>{M.classList.remove('talk');M.dataset.mood='happy';setTimeout(()=>{if(!M.classList.contains('talk')){$('speechEmoji').textContent='🐾';$('speechText').textContent=HINT}},450)},ms)}
+const HINT='Tocá a Chispa para un consejo.';$('speechEmoji').textContent='🐾';$('speechText').textContent=HINT;scheduleTongue();
 M.onclick=()=>{snd.hi();say(pick(MSG.tip),'wow',4200)};
 
 /* ---------- efectos ---------- */
@@ -221,7 +243,7 @@ function confetti(n=150){if(RM)return;const c=$('cf'),x=c.getContext('2d');c.wid
  (function st(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r,-p.r/2,p.r*2,p.r);x.restore()});if(++f<140)requestAnimationFrame(st);else x.clearRect(0,0,c.width,c.height)})()}
 function pop(t,el){const r=el.getBoundingClientRect(),d=document.createElement('div');d.className='xpf';d.textContent=t;d.style.left=r.left+r.width/2-18+'px';d.style.top=r.top+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),1000)}
 const LVN=['Cachorro','Curioso','Estudioso','Brillante','Sabio','Maestro','Leyenda'],lvl=()=>Math.floor((S?S.xp:0)/100);
-function xp(){const l=lvl();$('lv').innerHTML=ic('award')+'<span>Nv '+(l+1)+'</span><span class="nm"> · '+LVN[Math.min(l,6)]+'</span>';$('xp').innerHTML=ic('star','f')+'<span>'+(S?S.xp:0)+' XP</span>';$('st').innerHTML=ic('flame')+'<span>'+((S&&S.streak)||0)+'</span>';M.dataset.lv=Math.min(l+1,6)}
+function xp(){const l=lvl();$('lv').innerHTML=ic('award')+'<span>Nv '+(l+1)+'</span><span class="nm"> · '+LVN[Math.min(l,6)]+'</span>';$('xp').innerHTML=ic('star','f')+'<span>'+(S?S.xp:0)+' XP</span>';$('st').innerHTML=ic('flame')+'<span>'+((S&&S.streak)||0)+'</span>';M.dataset.lv=Math.min(l+1,7)}
 function touch(){const d=new Date().toISOString().slice(0,10);if(S.last===d)return;S.streak=S.last===new Date(Date.now()-864e5).toISOString().slice(0,10)?(S.streak||0)+1:1;S.last=d}
 const stars=b=>b>=100?3:b>=85?2:b>=70?1:0;
 
@@ -300,16 +322,53 @@ function sections(L){
   return out}
 const ROM=n=>{let r='';for(const [v,s] of [[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']])while(n>=v){r+=s;n-=v}return r};
 function unitLabel(u){const m=/^(unidad|cap[ií]tulo|m[oó]dulo)\s+([ivxlcdm]+|\d+)\b[\s.:\-–—]*(.*)$/i.exec(u||'');if(!m)return u||'';return m[1].toUpperCase()+' '+(/^\d+$/.test(m[2])?ROM(+m[2]):m[2].toUpperCase())+(m[3]?' - '+m[3].toUpperCase():'')}
-function askQ(title){
-  const c=title.replace(/^\s*(\d+(\.\d+)*|[IVXLC]+)[.)]\s*/i,'').replace(/[:.\s]+$/,'').toLowerCase().replace(/\s+/g,' ').trim();
+const GENERIC_TOPIC=/^(concepto|definici[oó]n|noci[oó]n|caracter[ií]sticas?|naturaleza(?: jur[ií]dica)?|clasificaci[oó]n|finalidad|importancia|r[eé]gimen|procedimiento|fundamento|origen|evoluci[oó]n|[aá]mbito|alcance|objeto|elementos?|requisitos?|principios?|tipos?|clases?|etapas?|fases?|funciones?|efectos?)$/i;
+const LIST_TERMS=[['características',/caracter[ií]sticas?/i],['elementos',/elementos?/i],['requisitos',/requisitos?/i],['principios',/principios?/i],['tipos',/tipos?/i],['clases',/clases?/i],['etapas',/etapas?/i],['fases',/fases?/i],['funciones',/funciones?/i],['efectos',/efectos?/i],['causas',/causas?/i],['consecuencias',/consecuencias?/i],['fuentes',/fuentes?/i],['presupuestos',/presupuestos?/i]];
+function listArticle(label){return /^(características|clases|etapas|fases|funciones|causas|consecuencias|fuentes|ideas principales)$/i.test(label)?'las':'los'}
+function cleanHeading(title){return String(title||'').replace(/^\s*(\d+(\.\d+)*|[IVXLC]+)[.)]\s*/i,'').replace(/[:.\s]+$/,'').replace(/\s+/g,' ').trim()}
+function unitTopic(unit){return unitLabel(unit||'').replace(/^(UNIDAD|CAP[IÍ]TULO|M[ÓO]DULO)\s+[IVXLCDM]+\s*[-–—:]?\s*/i,'').trim()}
+function readableSubject(value){
+  let x=String(value||'').replace(/^DE LA\s+/i,'la ').replace(/^DE LOS\s+/i,'los ').replace(/^DE LAS\s+/i,'las ').replace(/^DEL\s+/i,'el ').replace(/^DE UN\s+/i,'un ').replace(/^DE UNA\s+/i,'una ').trim();
+  return x.toLocaleLowerCase('es');
+}
+function withDe(subject){
+  const x=String(subject||'').trim();
+  if(/^el\s/i.test(x))return 'del '+x.replace(/^el\s/i,'');
+  return 'de '+x;
+}
+function contextSubject(title,unit,context){
+  const h=cleanHeading(title),u=unitTopic(unit);
+  const fromHeading=/\bde\s+(.+)$/i.exec(h);
+  if(fromHeading&&fromHeading[1].length>2)return readableSubject(fromHeading[1].replace(/[.:;]+$/,''));
+  if(u&&!GENERIC_TOPIC.test(u))return readableSubject(u);
+  const lines=sents(String(context||''));
+  for(const x of lines.slice(0,6)){
+    const m=/^(?:el|la|los|las|un|una)\s+(.{3,90}?)\s+(?:es|son|se define|se entiende|consiste|constituye|comprende|representa|supone|implica|significa)\b/i.exec(x);
+    if(m)return readableSubject(m[0].split(/\s+(?:es|son|se define|se entiende|consiste|constituye|comprende|representa|supone|implica|significa)\b/i)[0]);
+  }
+  return readableSubject(u||h);
+}
+function askQ(title,unit='',context=''){
+  const c=cleanHeading(title).toLowerCase(),subject=contextSubject(title,unit,context),label=LIST_TERMS.find(x=>x[1].test(c));
+  if(/^(concepto|definici[oó]n|noci[oó]n)(?:\s+de\s+.+)?$/.test(c))return subject?'¿Cuál es el concepto '+withDe(subject)+'?':'¿Cuál es el concepto desarrollado en este tema?';
+  if(label){const l=label[0];return subject?'¿Cuáles son '+listArticle(l)+' '+l+' '+withDe(subject)+'?':'¿Cuáles son '+listArticle(l)+' '+l+' que desarrolla este tema?'}
+  if(/^(naturaleza(?: jur[ií]dica)?)(?:\s+de\s+.+)?$/.test(c))return subject?'¿Cuál es la naturaleza jurídica '+withDe(subject)+'?':'¿Cuál es la naturaleza jurídica del tema?';
+  if(/^(finalidad|objeto|importancia)(?:\s+de\s+.+)?$/.test(c))return subject?'¿Cuál es la '+c+' '+withDe(subject)+'?':'¿Cuál es la '+c+' de este tema?';
+  if(/^clasificaci[oó]n(?:\s+de\s+.+)?$/.test(c))return subject?'¿Cómo se clasifica '+subject+'?':'¿Cómo se clasifica este tema?';
   if(!c)return '';
-  const w=c.split(' ')[0],fem=/(a|ión|dad|tud|umbre)$/.test(w);
   if(/^(qué|cuál|cuáles|cómo|cuándo|dónde|quién|quiénes|por qué|desde cuándo|hasta cuándo|para qué)\b/.test(c))return '¿'+cap(c)+'?';
   if(/^(el|la|los|las)\s/.test(c))return '¿Qué es '+c+'?';
-  const m=/^(concepto|definición|noción)\s+de\s+(.+)$/.exec(c);if(m)return '¿Qué es '+m[2]+'?';
-  if(w.length>3&&/s$/.test(w)&&!/^(concepto|finalidad)$/.test(w))return '¿Cuáles son '+(/as$/.test(w)?'las ':'los ')+c+'?';
-  if(/^(concepto|definición|noción|naturaleza|clasificación|finalidad|importancia|régimen|procedimiento|fundamento|origen|evolución|ámbito|alcance|objeto)\b/.test(c))return '¿Cuál es '+(fem?'la ':'el ')+c+'?';
-  return '¿Qué es '+(fem?'la ':'el ')+c+'?'}
+  if(/\s/.test(c)&&!GENERIC_TOPIC.test(c))return '¿Qué es '+c+'?';
+  return '¿Qué es '+c+' en el contexto de '+(subject||'este tema')+'?';
+}
+function buildSearchQuery(title,unit,context=''){
+  const h=cleanHeading(title),u=unitTopic(unit),body=sents(String(context||'')).filter(x=>x.length>25).slice(0,2);
+  const isGeneric=GENERIC_TOPIC.test(h),subject=contextSubject(title,unit,context),hl=h.toLowerCase(),ul=readableSubject(u);
+  const unitAlreadyCovered=!!ul&&(hl.includes(ul)||hl.includes(ul.replace(/^(?:el|la|los|las|un|una)\s/,''))||ul.includes(hl));
+  const base=isGeneric?(subject?`${h} ${withDe(subject)}`:h):[h,!unitAlreadyCovered&&u?ul:''].filter(Boolean).join(' ');
+  const detail=body.join(' ').replace(/[“”"']/g,'').trim();
+  return cut([base,detail].filter(Boolean).join(' '),240);
+}
 function keyWords(x){const ws=(x.match(WRD)||[]).slice(1).filter(w=>!STOP.has(w.toLowerCase())),nv=ws.filter(w=>!/(an|en|ar|er|ir|ían|ió|aron)$/.test(w.toLowerCase()));return nv.length?nv:ws}
 function dist(al,low,pools){
   const out=[],seen=new Set([al]),stem=al.slice(0,5);
@@ -346,6 +405,44 @@ function casoQ(s,ti,secs,clean){
   for(const o of shuf(ot.slice()).sort((a,b)=>b.u-a.u)){if(!seen.has(o.t)){seen.add(o.t);uq.push(o.t)}if(uq.length>=3)break}
   if(uq.length<3)return null;
   return{q:'Leé el caso: «'+e+'». ¿Con cuál de estos temas se relaciona?',options:[me,...uq],correct:0,exp:'El caso se relaciona con «'+me+'». Según tu material: «'+cut(s.dev[0]||'',220)+'»',k:'c'}}
+function splitEnumeration(raw){
+  let t=String(raw||'').replace(/\b(?:por ejemplo|por citar algunos|entre otros|etc[eé]tera?)\b/gi,'').replace(/[.!?]+$/,'').trim();
+  if(!t)return [];
+  let parts=t.split(/\s*(?:;|•|\u2022|\n)\s*/).filter(Boolean);
+  if(parts.length<3){
+    const numbered=t.split(/(?:^|\s)(?:\d+|[a-z])[.)]\s+/i).filter(Boolean);
+    if(numbered.length>=3)parts=numbered;
+  }
+  if(parts.length<3){
+    parts=t.split(/\s*,\s*/).flatMap((part,i,all)=>i===all.length-1?part.split(/\s+(?:y|e)\s+/i):[part]);
+  }
+  return parts.map(x=>x.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').replace(/^[:–—\s]+|[,:;\s]+$/g,'').trim())
+    .filter(x=>x.length>=2&&x.length<=110&&!/^(?:y|e|o|u)$/i.test(x)).slice(0,6);
+}
+function extractListQuestion(section,search){
+  const title=cleanHeading(section.title),labelFromTitle=LIST_TERMS.find(x=>x[1].test(title));
+  const bullets=section.dev.map(x=>x.trim()).filter(x=>/^(?:[-*•]|\d+[.)])\s+/.test(x)).map(x=>x.replace(/^(?:[-*•]|\d+[.)])\s*/,''));
+  if(bullets.length>=3){
+    const items=bullets.slice(0,6),label=labelFromTitle?labelFromTitle[0]:'ideas principales',subject=contextSubject(section.title,section.unit,section.text);
+    return{q:subject?`¿Cuáles son ${listArticle(label)} ${label} ${withDe(subject)}?`:`¿Cuáles son ${listArticle(label)} ${label} que presenta el material?`,k:'l',items,exp:'Según tu material: '+items.join(' · '),v:search};
+  }
+  for(const para of section.dev){
+    let m=para.match(/((?:las|los|sus)?\s*(?:principales\s+)?(?:caracter[ií]sticas?|elementos?|requisitos?|principios?|tipos?|clases?|etapas?|fases?|funciones?|efectos?|causas?|consecuencias?|fuentes|presupuestos?)\b.{0,85}?\b(?:son|incluyen|comprenden|consisten en|se componen de|constan de|se dividen en|se clasifican en)\s*:?)\s*(.+)/i);
+    let label='';
+    if(m){const lm=LIST_TERMS.find(x=>x[1].test(m[1]));label=lm?lm[0]:'elementos';}
+    else{
+      m=para.match(/\b(?:se caracteriza por|se compone de|consta de|comprende|incluye|se divide en|se clasifica en)\s*:?[ ]*(.+)/i);
+      if(m)label=labelFromTitle?labelFromTitle[0]:'elementos';
+    }
+    if(!m)continue;
+    const items=splitEnumeration(m[2]);
+    if(items.length<3)continue;
+    const subject=contextSubject(section.title,section.unit,section.text);
+    const qlabel=label||'elementos';
+    return{q:subject?`¿Cuáles son ${listArticle(qlabel)} ${qlabel} ${withDe(subject)}?`:`¿Cuáles son ${listArticle(qlabel)} ${qlabel} que presenta el material?`,k:'l',items,exp:'Según tu material: '+items.join(' · '),v:search};
+  }
+  return null;
+}
 function buildTemas(secs,name){
   secs.forEach(s=>{s.title=s.title||name;s.text=s.dev.join(' ')});
   const N=secs.length,df={},tt=[],tf={};
@@ -361,24 +458,25 @@ function buildTemas(secs,name){
     for(const p of s.dev){if(cur.length&&len+p.length>900){P.push({k:'d',paras:cur});cur=[];len=0}cur.push(p);len+=p.length}
     if(cur.length)P.push({k:'d',paras:cur});
     if(s.ex.length)P.push({k:'e',paras:s.ex});
-    const pl=pools(ti),sc=w=>(tt[ti][w.toLowerCase()]||0)*(1+Math.log(N/(df[w.toLowerCase()]||1)))+w.length/10,L=s.text.length,n=Math.max(5,Math.min(9,Math.round(L/420)+3)),qs=[];
+    const pl=pools(ti),sc=w=>(tt[ti][w.toLowerCase()]||0)*(1+Math.log(N/(df[w.toLowerCase()]||1)))+w.length/10,L=s.text.length,n=Math.max(5,Math.min(9,Math.round(L/420)+3)),qs=[],search=buildSearchQuery(s.title,s.unit,s.text);
     defs.filter(d=>d.ti===ti).slice(0,2).forEach((d,k)=>{const q=defQ(d,k%2,defs,secs);if(q)qs.push(q)});
+    const lq=extractListQuestion(s,search);if(lq)qs.push(lq);
     const c=casoQ(s,ti,secs,clean);if(c)qs.push(c);
     const ok=s.ss.filter(x=>x.length>=60&&x.length<=190);
     for(let k=0;k<(ok.length>=8&&L>1500?2:1);k++){const f=falseQ(ok,sc,pl);if(f&&!qs.some(q=>q.exp===f.exp))qs.push(f)}
     const good=s.ss.filter(x=>x.length>=60&&x.length<=240),rest=s.ss.filter(x=>x.length<60||x.length>240);
     for(const x of [...shuf(good),...shuf(rest)]){if(qs.length>=n)break;const q=clozeQ(x,sc,pl);if(q)qs.push(q)}
-    const v=askQ(s.title);qs.forEach(q=>{if(q.k!=='d')q.v=v});
-    return{title:s.title,unit:s.unit,pages:P,qs:shuf(qs),best:0,passed:false}}).filter(t=>t.pages.length)}
+    const v=search||askQ(s.title,s.unit,s.text);qs.forEach(q=>{q.v=v});
+    return{title:s.title,unit:s.unit,pages:P,qs:shuf(qs),searchQuery:v,best:0,passed:false}}).filter(t=>t.pages.length)}
 
 /* ---------- inicio: solo arrastrar ---------- */
 function home(msg){
   onkey=null;
   app.innerHTML=`<div class="card"><h1 class="hero-t">Arrastrá tu material y jugá</h1>
-  <p class="lead">Convertimos tu documento en temas con examen. Se avanza en orden, un tema por vez.</p>
+  <p class="lead">Convertimos tu documento en temas y exámenes variados: opción múltiple, frases para completar y listas extraídas de las enumeraciones del material. Se avanza en orden, un tema por vez.</p>
   <div id="dz" class="dz" tabindex="0" role="button" aria-label="Soltar o buscar documento">${ic('upload')}<b class="t1">Soltá acá tu documento o tocá para buscarlo</b><b class="t2">Soltá para subir tu documento</b><b class="t3">Tocá para elegir tu documento</b><small>PDF, TXT o MD · se procesa en tu navegador</small></div><input type="file" id="fi" class="vh" multiple accept=".pdf,application/pdf,.txt,text/plain,.md,text/markdown,.text" tabindex="-1" aria-hidden="true">
   <div id="msg" class="err">${esc(msg||'')}</div>
-  <div class="feats"><span>${ic('book')} Basado en tu documento</span><span>${ic('target')} Examen en cada tema</span><span>${ic('refresh')} Repaso de tus errores</span><span>${ic('flame')} Racha de estudio</span><span>${ic('sparkles')} Chispa te acompaña</span></div>
+  <div class="feats"><span>${ic('book')} Basado en tu documento</span><span>${ic('target')} Examen mixto en cada tema</span><span>${ic('refresh')} Repaso de tus errores</span><span>${ic('flame')} Racha de estudio</span><span>${ic('sparkles')} Chispa te acompaña</span></div>
   ${S?`<div class="row mt" style="justify-content:center"><button class="btn cont" id="cont">${ic('play')}<span>Continuar: ${esc(S.name)}</span></button></div>`:''}</div>`;
   const dz=$('dz');
   let dg=false;
@@ -423,7 +521,7 @@ function map(){
 
 /* ---------- estudio: tal cual está en el material ---------- */
 const first=s=>{const m=s.match(/^.{20,}?[.!?](?=\s|$)/);return cut((m?m[0]:s).trim(),150)};
-const vq=t=>askQ(t.title)||first(t.pages[0].paras[0]);
+const vq=t=>t.searchQuery||buildSearchQuery(t.title,t.unit,t.pages.map(p=>p.paras.join(' ')).join(' '))||askQ(t.title,t.unit,t.pages.map(p=>p.paras.join(' ')).join(' '));
 const vlink=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
 function study(i,k=0){
   const t=S.temas[i],P=t.pages,p=P[k],N=S.temas.length,last=k===P.length-1,dn=P.filter(x=>x.k==='d').length,di=P.slice(0,k+1).filter(x=>x.k==='d').length;
@@ -431,7 +529,7 @@ function study(i,k=0){
   <h2>${esc(t.title)}</h2><div class="bar"><i style="width:${(k+1)/P.length*100}%"></i></div>
   <div class="sec ${p.k==='e'?'ex':''}"><span class="lb">${p.k==='e'?ic('bulb')+' Ejemplo':ic('book')+' Desarrollo'+(dn>1?' ('+di+'/'+dn+')':'')}</span>${p.paras.map(x=>`<p>${esc(x)}</p>`).join('')}</div>
   <div class="row mt nav"><button class="btn g" id="pv" ${k?'':'disabled'}>${ic('left')} Anterior</button>${last?'<button class="btn" id="ex">'+ic('target')+' Ir al examen</button>':'<button class="btn" id="nx">Siguiente '+ic('arrow')+'</button>'}</div>
-  <div class="meta"><span class="src">${ic('file')} Contenido de tu documento</span><a class="vl" href="${vlink(vq(t))}" target="_blank" rel="noopener">${ic('search')} Verificar en internet ${ic('ext')}</a></div></div>`;
+  <div class="meta"><span class="src">${ic('file')} Contenido de tu documento</span><a class="vl" href="${vlink(vq(t))}" target="_blank" rel="noopener">${ic('search')} Verificar tema en internet ${ic('ext')}</a></div></div>`;
   snd.tick();if(k&&k%3===2)say(pick(MSG.tip),'happy');
   const pv=()=>{if(k)study(i,k-1)},nx=()=>{last?go2():study(i,k+1)};
   const go2=()=>{if(t.qs.length)runExam(i,t.qs);else{if(!t.passed){t.passed=true;t.best=100;S.xp+=20}save();xp();say('Tema de lectura completado. ¡Seguimos!','wow');i+1<N?study(i+1):map()}};
@@ -443,26 +541,56 @@ function study(i,k=0){
 
 /* ---------- examen ---------- */
 function runExam(i,qs,review){
-  const list=shuf(qs.map(q=>{const o=shuf(q.options.map((x,n)=>({x,ok:n===q.correct})));return{...q,options:o.map(z=>z.x),correct:o.findIndex(z=>z.ok)}}));
-  question({i,list,n:0,ok:0,res:[],combo:0,review:!!review,orig:qs})}
+  const list=shuf(qs.map(q=>{
+    if(q.k==='l')return{...q,items:[...(q.items||[])]};
+    const o=shuf((q.options||[]).map((x,n)=>({x,ok:n===q.correct})));
+    return{...q,options:o.map(z=>z.x),correct:o.findIndex(z=>z.ok)};
+  }));
+  question({i,list,n:0,ok:0,res:[],combo:0,review:!!review,orig:qs});
+}
+function plainAnswer(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim()}
+const ANSWER_STOP=new Set('el la los las un una unos unas de del al y e o u en por para con sin sobre entre como que se es son'.split(' '));
+function listAnswerMatches(answer,item){
+  const a=plainAnswer(answer),b=plainAnswer(item);if(!a||!b)return false;
+  if(a.includes(b)||b.includes(a))return true;
+  const words=b.split(' ').filter(w=>w.length>3&&!ANSWER_STOP.has(w));
+  if(!words.length)return false;
+  const hits=words.filter(w=>a.includes(w)).length;
+  return hits>=Math.max(1,Math.ceil(words.length*.55));
+}
 function question(E){
-  const q=E.list[E.n],T=E.list.length;
-  app.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><small>${E.review?'REPASO DE ERRORES':'EXAMEN · TEMA '+(E.i+1)}</small><b>${E.n+1} / ${T}</b></div>
+  const q=E.list[E.n],T=E.list.length,isList=q.k==='l';
+  const answerMarkup=isList?`<div class="list-answer">${(q.items||[]).map((_,n)=>`<label><span>${n+1}</span><input type="text" maxlength="180" autocomplete="off" data-list-answer="${n}" aria-label="Elemento ${n+1}" placeholder="Escribí el elemento ${n+1}..."></label>`).join('')}</div><p class="list-hint">Una idea por renglón. Tratá de responder sin mirar el material.</p><div class="row mt"><button class="btn" id="submitList">Corregir mi lista</button></div>`:(q.options||[]).map((o,n)=>`<button class="opt" data-n="${n}"><kbd>${n+1}</kbd><span>${esc(o)}</span></button>`).join('');
+  app.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><small>${E.review?'REPASO DE ERRORES':'EXAMEN MIXTO · TEMA '+(E.i+1)}</small><b>${E.n+1} / ${T}</b></div>
   <div class="dots mt">${E.list.map((_,n)=>`<i class="${n<E.n?(E.res[n]?'k':'x'):n===E.n?'d':''}"></i>`).join('')}</div><div class="q">${esc(q.q)}</div>
-  <div>${q.options.map((o,n)=>`<button class="opt" data-n="${n}"><kbd>${n+1}</kbd><span>${esc(o)}</span></button>`).join('')}</div><div id="fb"></div></div>`;
+  ${isList?'<small>LISTA PARA COMPLETAR</small>':q.k==='z'?'<small>COMPLETAR FRASE · ELEGÍ LA OPCIÓN</small>':'<small>SELECCIÓN MÚLTIPLE</small>'}<div>${answerMarkup}</div><div id="fb"></div></div>`;
   let done=false;
   const next=()=>{E.n++;E.n<T?question(E):result(E)};
-  const choose=n=>{
-    if(done)return;done=true;const ok=n===q.correct,b=app.querySelectorAll('.opt')[n];touch();
-    if(ok){E.ok++;E.combo++;S.xp+=10;if(E.review)S.missed=S.missed.filter(m=>m.q!==q.q);snd.ok();pop('+10 XP',b);say(E.combo>=3?'¡Racha de '+E.combo+' aciertos!':pick(MSG.ok),E.combo>=3?'wow':'happy',3000)}
-    else{E.combo=0;if(!E.review&&!S.missed.some(m=>m.q===q.q)){S.missed.push({q:q.q,options:q.options,correct:q.correct,exp:q.exp,v:q.v});S.missed=S.missed.slice(-30)}snd.bad();say(pick(MSG.bad),'sad',3600)}
+  const finish=(ok,details='',rewardTarget=null)=>{
+    if(done)return;done=true;touch();
+    if(ok){E.ok++;E.combo++;S.xp+=10;if(E.review)S.missed=S.missed.filter(m=>m.q!==q.q);snd.ok();if(rewardTarget)pop('+10 XP',rewardTarget);say(E.combo>=3?'¡Racha de '+E.combo+' aciertos!':pick(MSG.ok),E.combo>=3?'wow':'happy',3000)}
+    else{E.combo=0;if(!E.review&&!S.missed.some(m=>m.q===q.q)){S.missed.push({...q});S.missed=S.missed.slice(-30)}snd.bad();say(pick(MSG.bad),'sad',3600)}
     E.res[E.n]=ok;save();xp();
-    app.querySelectorAll('.opt').forEach((o,m)=>{o.disabled=true;if(m===q.correct)o.classList.add('c');else if(m===n)o.classList.add('w')});
-    $('fb').innerHTML=`<div class="fb ${ok?'g':'b'}"><b class="fh">${ok?ic('check')+' ¡Correcto!':ic('x')+' Todavía no'}</b><br>${esc(q.exp)}<br><small><a href="${vlink(q.v)}" target="_blank" rel="noopener">${ic('search')} Verificar en internet</a></small></div>
+    $('fb').innerHTML=`<div class="fb ${ok?'g':'b'}"><b class="fh">${ok?ic('check')+' ¡Correcto!':ic('x')+' Revisemos la respuesta'}</b>${details?'<div class="list-review">'+details+'</div>':''}<p style="margin-top:8px">${esc(q.exp||'')}</p><small><a href="${vlink(q.v||'')}" target="_blank" rel="noopener">${ic('search')} Verificar con el tema completo</a></small></div>
     <div class="row mt" style="justify-content:flex-end"><button class="btn" id="nq">${E.n===T-1?'Ver resultado':'Siguiente'} ${ic('arrow')}</button></div>`;
-    $('nq').onclick=next;$('nq').focus({preventScroll:true});if($('fb').scrollIntoView)$('fb').scrollIntoView({block:'nearest',behavior:'smooth'})};
-  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
-  onkey=e=>{if(!done&&/^[1-9]$/.test(e.key)&&+e.key<=q.options.length)choose(+e.key-1);else if(done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();next()}}}
+    $('nq').onclick=next;$('nq').focus({preventScroll:true});if($('fb').scrollIntoView)$('fb').scrollIntoView({block:'nearest',behavior:'smooth'});
+  };
+  if(isList){
+    $('submitList').onclick=()=>{
+      if(done)return;
+      const answers=[...app.querySelectorAll('[data-list-answer]')].map(x=>x.value.trim());
+      if(!answers.some(Boolean)){$('fb').innerHTML='<p class="err">Completá al menos un renglón antes de corregir.</p>';return}
+      const matches=(q.items||[]).map(item=>answers.some(a=>listAnswerMatches(a,item))),hits=matches.filter(Boolean).length,pct=Math.round(hits/Math.max(1,matches.length)*100),ok=pct>=70;
+      const details=(q.items||[]).map((item,n)=>`<div class="${matches[n]?'hit':'miss'}">${matches[n]?'✓':'○'} ${esc(item)}</div>`).join('')+`<small>Coincidencias textuales: ${hits} de ${matches.length} (${pct}%). La comparación es aproximada; revisá también las ideas equivalentes expresadas con otras palabras.</small>`;
+      finish(ok,details,$('submitList'));
+    };
+  }else{
+    const choose=n=>{if(done)return;const ok=n===q.correct,b=app.querySelectorAll('.opt')[n];app.querySelectorAll('.opt').forEach((o,m)=>{o.disabled=true;if(m===q.correct)o.classList.add('c');else if(m===n)o.classList.add('w')});finish(ok,'',b)};
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+    onkey=e=>{if(!done&&/^[1-9]$/.test(e.key)&&+e.key<=q.options.length)choose(+e.key-1);else if(done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();next()}};
+  }
+  if(isList)onkey=e=>{if(done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();next()}};
+}
 function result(E){
   const T=E.list.length,sc=Math.round(E.ok/T*100),pass=sc>=70,s=stars(sc);let first=false;
   if(E.i!=null){const t=S.temas[E.i];if(sc>t.best)t.best=sc;if(pass&&!t.passed){t.passed=true;first=true;S.xp+=50}}
@@ -486,6 +614,23 @@ $('bn').onclick=function(){
   if(!delArm){delArm=true;this.classList.add('arm');lb.textContent='¿Borrar curso?';setTimeout(()=>{delArm=false;this.classList.remove('arm');lb.textContent='Nuevo curso'},3000);return}
   delArm=false;this.classList.remove('arm');lb.textContent='Nuevo curso';closeMenu();S=null;try{localStorage.removeItem(KEY)}catch(e){}xp();home()};
 
+function refreshSavedCourseSearch(){
+  if(!S||!Array.isArray(S.temas))return;
+  let changed=false;
+  S.temas.forEach(t=>{
+    const dev=(t.pages||[]).filter(p=>p.k==='d').flatMap(p=>p.paras||[]),context=(t.pages||[]).flatMap(p=>p.paras||[]).join(' ');
+    const query=buildSearchQuery(t.title,t.unit,context);
+    if(t.searchQuery!==query){t.searchQuery=query;changed=true;}
+    t.qs=t.qs||[];
+    t.qs.forEach(q=>{if(q.v!==query){q.v=query;changed=true;}});
+    if(!t.qs.some(q=>q.k==='l')){
+      const list=extractListQuestion({title:t.title,unit:t.unit,dev,text:context},query);
+      if(list){t.qs.push(list);changed=true;}
+    }
+  });
+  if(changed)save();
+}
+refreshSavedCourseSearch();
 xp();S?map():home();
 </script>
 </body>
